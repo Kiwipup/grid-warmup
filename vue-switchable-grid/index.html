@@ -17,7 +17,24 @@
     <h1 class="mt-5">Vue Switchable Grid</h1>
 
     <div id="app" v-cloak>
-
+            <form class="form-inline">
+                <input  v-model="searchTerm" type="text">
+                <label class="mr-sm-2" for="inlineFormCustomSelect">Gifs per page</label>
+              <!--  <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="inlineFormCustomSelect">
+                  <option selected>Choose...</option>
+                  <div id='displayPerPage'>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                </div>
+              </select> -->
+              <input v-model="limit" type="text" class="">
+                <!-- <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+                  <input v-model="limit" type="checkbox" class="custom-control-input">
+                  <span class="custom-control-indicator"></span>
+                </label> -->
+          <button class="btn btn-warning ml-2" @click=searchGifs()>Search</button>
+        </form>
             <nav class="nav bg-secondary justify-content-end mt-3 nav-tabs">
             <a href="#" v-bind:class="{ 'active bg-light': showGrid }" class="border-0 text-warning nav-link nav-item mr-1" v-on:click="pickGrid"><i class="fas fa-th"></i></a>
             <a href="#" v-bind:class="{ 'active bg-light': showList }" class="border-0 text-warning nav-link nav-item" v-on:click="pickList"><i class="fas fa-th-list"></i></a>
@@ -27,16 +44,16 @@
 
             <div id="list" class="" v-if="showList">
                 <ul class="list-unstyled">
-                    <li v-for="gif in gifs" class="pb-3 row">
-                        <a class="col-sm-2" v-bind:href="gif.url"><img v-bind:src="gif.url"></a>
-                        <a class="col-sm-10 text-truncate" v-bind:href="gif.url">{{ cat.url }}</a>
+                    <li v-for="gif in gifs" :key="gif.id" class="pb-3 row">
+                        <a class="col-sm-2" v-bind:href="gif" target="_blank"><img :src="gif"></a>
+                        <a class="col-sm-10 text-truncate" v-bind:href="gif" target="_blank">{{ gif }}</a>
                     </li>
                 </ul>
             </div>
 
             <div id="grid" class="grid-wrapper" v-if="showGrid">
-                <div v-for="gif in gifs">
-                    <a v-bind:href="gif.url"><img v-bind:src="gif.url"></a>
+                <div v-for="gif in gifs" :key="gif.id"  >
+                    <a v-bind:href="gif" target="_blank"><img :src="gif" ></a>
                 </div>
             </div>
 

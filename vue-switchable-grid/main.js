@@ -5,7 +5,9 @@ let app = new Vue({
     data: {
         show: 'grid',
         apiRequest: new XMLHttpRequest(),
-        gifs: {},
+        gifs: [],
+        searchTerm: "",
+        limit: 0
 
 
     },
@@ -26,8 +28,14 @@ let app = new Vue({
 
 
         // Format a url
-        let url = "http://api.giphy.com/v1/gifs/search?q=cats&api_key=EwpBpVK44KNZbogrclYKVTcoXwhFEEzF&limit=5";
+        //let url = "http://api.giphy.com/v1/gifs/search?q=cats&api_key=EwpBpVK44KNZbogrclYKVTcoXwhFEEzF&limit=5";
+                /*let apiKey = "EwpBpVK44KNZbogrclYKVTcoXwhFEEzF";
+          let searchEndPoint = "https://api.giphy.com/v1/gifs/search?";
+          let limit = 5;
 
+          let url = `${searchEndPoint}&api_key=${apiKey}&q=${
+            this.searchTerm
+          }&limit=${limit}`;
 
           fetch(url)
             .then(response => {
@@ -38,7 +46,7 @@ let app = new Vue({
             })
             .catch(err => {
               console.log(err);
-            });
+            }); */
 
         // Fetch from the url
         /*this.apiRequest.onload = this.onSuccess;
@@ -69,16 +77,42 @@ let app = new Vue({
 
         onSuccess: function (json) {
 
-          /*this.gifs = json.data
-  .map(gifs => gif.id)
-  .map(gifId => {
-    return `https://media.giphy.com/media/${gifId}/giphy.gif`;
-});*/
+                  this.gifs = json.data
+          .map(gifs => gifs.id)
+          .map(gifId => {
+            return `https://media.giphy.com/media/${gifId}/giphy.gif`;
+        });
 
-              this.gifs = json.data
-              console.log(this.gifs);
+            /*  this.gifs = json.data
+              console.log(this.gifs);*/
+
+        },
+
+        searchGifs: function () {
+                    let apiKey = "EwpBpVK44KNZbogrclYKVTcoXwhFEEzF";
+            let searchEndPoint = "https://api.giphy.com/v1/gifs/search?";
+            //let limit = 0;
+
+            let url = `${searchEndPoint}&api_key=${apiKey}&q=${
+              this.searchTerm
+            }&limit=${this.limit}`;
+
+            fetch(url)
+              .then(response => {
+                return response.json();
+              })
+              .then(json => {
+                this.onSuccess(json);
+                console.log(json.data[0].embed_url);
+              })
+              .catch(err => {
+                console.log(err);
+              });
+
 
         }
+
+
 
     }
 
