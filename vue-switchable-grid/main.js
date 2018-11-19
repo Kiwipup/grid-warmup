@@ -7,7 +7,7 @@ let app = new Vue({
         apiRequest: new XMLHttpRequest(),
         gifs: [],
         searchTerm: "",
-        limit: 0
+        limit: 25
 
 
     },
